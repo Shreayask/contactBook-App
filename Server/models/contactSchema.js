@@ -14,10 +14,10 @@ let contact = new Schema({
     description: {
         type: String
     }
-}, { collection: "Contacts" }
+}, { collection: "Contactss" }
 
 )
 
-const Contacts = mongoose.model('Contacts', contact);
+const Contactt = mongoose.model('Contactt', contact);
 
-module.exports = { Contacts }
+module.exports = { Contactt }

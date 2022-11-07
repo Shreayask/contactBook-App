@@ -1,12 +1,14 @@
 var MongoClient = require('mongodb').MongoClient;
-
-var url = "mongodb://localhost:27017/Contacts";
+var url = "mongodb://localhost:27017/ContactDb";
 const mongoose = require("mongoose");
 
-mongoose.connect(url, { useUnifiedTopology: true, useNewUrlParser: true }).then(
-    () => console.log("connection started")).catch((error) =>
-        console.log(error.message));
+mongoose.connect(url, { useUnifiedTopology: true, useNewUrlParser: true });
 const connection = mongoose.connection;
 
+MongoClient.connect(url, function (err, db) {
+    if (err) throw err; console.log("Database created!");
+    db.close();
+});
 
 module.exports = { connection }
+

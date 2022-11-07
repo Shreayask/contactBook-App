@@ -31,3 +31,43 @@
   height: 50px;
   width: 65px;
 }
+
+.container{
+  overflow: auto;
+}
+
+.action{
+  width: 450px;
+}
+
+.action-btn1{
+  background-color: rgb(255, 238, 0) ;
+}
+
+.action-btn2{
+  background-color: rgb(0, 142, 213) ;
+}
+
+.action-btn3{
+  background-color: rgb(239, 0, 0) ;
+}
+
+.view-btn{
+  margin-left: 5rem !important;
+}
+
+.form-container{
+  width: 80%;
+  margin: auto;
+  padding: 1rem;
+  margin-top: 2rem;
+}
+
+.view-container{
+  width: 60%;
+  margin: auto;
+  padding: 3rem;
+  background-color: rgb(79, 121, 93);
+  border: 1px solid black;
+  border-radius: 1rem;
+}

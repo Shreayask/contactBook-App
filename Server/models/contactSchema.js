@@ -13,8 +13,14 @@ let contact = new Schema({
     },
     description: {
         type: String
+    },
+    image: {
+        type: String
+    },
+    favorite: {
+        type: Boolean
     }
-}, { collection: "Contactss" }
+}, { collection: "ContactsTable1" }
 
 )
 

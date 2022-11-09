@@ -8,13 +8,15 @@ const Addcontact = () => {
         name: "",
         number: "",
         email: "",
-        description: ""
+        description: "",
+        image: "",
+        favorite: false
 
     })
 
     const setData = (e) => {
         const { name, value } = e.target;
-        console.log(e.target.value)
+        console.log('val', e.target.value)
 
         setInput((preval) => {
             return {
@@ -25,13 +27,45 @@ const Addcontact = () => {
         })
 
     }
+    const setFavourite = () => {
+        setInput({ ...input, favorite: true })
+    }
+
+    const addInputData = async (e) => {
+        e.preventDefault();
+        console.log('i m inside submit', input);
+
+        const { name, number, email, description, image, favorite } = input
+        const res = await fetch("http://localhost:8000/register", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                name, number, email, description, image, favorite
+            })
+        });
+        const response = await res.json();
+        console.log(response);
+
+        if (res.status === 404 || !response) {
+            window.alert("Error!!");
+            console.log("Error");
+        } else {
+            window.alert("Contact is saved.");
+            console.log("Data saved");
+        }
+
+    }
 
     return (
         <div className="form-container mt-6">
             <div  >
                 <Link to="/"> <button className="view-btn">View Contact </button></Link>
+                <button className="view-btn" onClick={setFavourite}>Add to Favorite </button>
             </div>
-            <Form setInfo={setData} inputData={input} />
+
+            <Form setInfo={setData} setInput={setInput} saveData={addInputData} inputData={input} image={input.image} />
 
 
         </div>

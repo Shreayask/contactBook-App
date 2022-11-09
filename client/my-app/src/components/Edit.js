@@ -1,7 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import Form from "./Form";
 
 
 const Edit = () => {
+
+    const history = useNavigate();
 
     const [input, setInput] = useState({
 
@@ -11,6 +15,13 @@ const Edit = () => {
         description: ""
 
     })
+
+
+
+    useEffect(() => {
+        getContactData()
+    }, []);
+
 
     const setData = (e) => {
         const { name, value } = e.target;
@@ -26,55 +37,83 @@ const Edit = () => {
 
     }
 
+    const id = useParams("");
+
+    console.log('id', id.id);
+    const ids = id.id;
+
+
+    const updateData = async (e) => {
+        e.preventDefault();
+        console.log('i m inside submit', input);
+        console.log('ids', ids);
+
+        const { name, number, email, description, image, favorite } = input
+        const res = await fetch(`http://localhost:8000/edit/${ids}`, {
+            method: 'PATCH',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                name, number, email, description, image, favorite
+            })
+        });
+        const response = await res.json();
+        console.log(response);
+
+        if (res.status === 404 || !response) {
+            window.alert("Error!!");
+            console.log("Error");
+        } else {
+            window.alert("Contact is Edited.");
+            console.log("Data saved");
+            history("/");
+        }
+
+    }
+
+
+
+
+
+    const getContactData = async () => {
+
+
+
+        const response = await fetch(`http://localhost:8000/view/${ids}`, {
+            method: 'GET',
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": 'application/json'
+            }
+
+
+        });
+        console.log('resp ', response);
+        const datas = await response.json();
+
+        console.log('datas ', datas.data);
+
+        if (response.status === 404 || !datas) {
+            window.alert("Error!!");
+
+        } else {
+            setInput(datas.data);
+            console.log("Data recieved");
+        }
+    }
+    const setFavourite = () => {
+        setInput({ ...input, favorite: true });
+        alert("Added to favorite");
+    }
+
+
     return (
         <div>
             <div className="form-container mt-4">
+                <button className="view-btn" onClick={setFavourite}>Add to Favorite </button>
+                <Form setInfo={setData} setInput={setInput} saveData={updateData} inputData={input} image={input.image} />
 
-
-                <form>
-                    <div class="row">
-                        <div class="col-12 col-lg-12 col-xl-12 ">
-                            <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">Profilegggg</label>
-                                <input class="form-control" type="file" name="profile" id="formFile" style={{ borderRadius: "2rem ", width: "30%" }} />
-                            </div>
-
-                        </div>
-                        <div class="col-12 col-lg-6 col-xl-6 ">
-                            <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">Name</label>
-                                <input type="text" class="form-control" onChange={setData} name="name" value={input.name} id="exampleInputEmail1" />
-
-                            </div>
-
-                        </div>
-                        <div class="col-12 col-lg-6 col-xl-6 ">
-                            <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">Phone number</label>
-                                <input type="text" class="form-control" onChange={setData} name="number" value={input.number} id="exampleInputEmail1" />
-                            </div>
-
-                        </div>
-                        <div class="col-12 col-lg-6 col-xl-6 ">
-                            <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">Email address</label>
-                                <input type="email" class="form-control" onChange={setData} name="email" value={input.email} id="exampleInputEmail1" aria-describedby="emailHelp" />
-                                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-                            </div>
-
-                        </div>
-                        <div class="col-12 col-lg-6 col-xl-6 ">
-                            <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">Description</label>
-                                <textarea type="text" class="form-control" name="description" onChange={setData} value={input.description} id="exampleInputEmail1" cols="25" rows="3" ></textarea>
-
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
             </div>
 
         </div>

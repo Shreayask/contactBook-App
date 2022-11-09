@@ -19,6 +19,7 @@ function App() {
           <Route path="/register" element={<Addcontact />} />
           <Route path="/edit/:id" element={<Edit />} />
           <Route path="/view/:id" element={<ViewDetails />} />
+          <Route path="/favourite" element={<Home />} />
         </Routes>
 
       </BrowserRouter>

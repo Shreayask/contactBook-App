@@ -1,46 +1,83 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import DisplayContact from "./DisplayContact";
 
 const Home = () => {
+    const [getContact, setContactData] = useState([]);
+
+    useEffect(() => {
+        getContactData();
+    }, []);
+
+    console.log('out', getContact);
+
+    const getContactData = async () => {
+
+        console.log('inside');
+
+        const response = await fetch('http://localhost:8000/', {
+            method: 'GET',
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": 'application/json'
+            }
+
+
+        });
+        console.log('resp ', response);
+        const datas = await response.json();
+
+        console.log('datas ', datas.data);
+
+        if (response.status === 404 || !datas) {
+            window.alert("Error!!");
+
+        } else {
+            setContactData(datas.data);
+            console.log("Data recieved");
+        }
+    }
+
+    const deleteContact = async (id) => {
+
+        console.log('inside del', id);
+
+        const response = await fetch(`http://localhost:8000/delete/${id}`, {
+            method: 'DELETE',
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": 'application/json'
+            }
+
+
+        });
+        console.log('resp ', response);
+        const deletedData = await response.json();
+
+        console.log('deletedData ', deletedData.data);
+
+        if (response.status === 404 || !deletedData) {
+            window.alert("Error!!");
+
+        } else {
+
+            console.log("User Deleted");
+            getContactData();
+
+        }
+    }
+
+
+
+
+
+
     return (
         <div className="mt-5">
             <div className="container">
+                <DisplayContact contactList={getContact} deleteContact={deleteContact} />
 
-                <table class="table table-info">
-                    <thead>
-                        <tr>
-                            <th scope="col">Sn</th>
-                            <th scope="col">Name</th>
-                            <th scope="col" >Phone no.</th>
-                            <th scope="col" className="action" >Action </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td className="d-flex gap-4">
-                                <button className="action-btn1"><i class="bi bi-eye-fill"></i></button>
-                                <button className="action-btn2"><i class="bi bi-pen-fill"></i></button>
-                                <button className="action-btn3"><i class="bi bi-trash3-fill"></i></button>
-                            </td>
 
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td colspan="2">Larry the Bird</td>
-                            <td>@twitter</td>
-
-                        </tr>
-                    </tbody>
-                </table>
             </div>
 
         </div>

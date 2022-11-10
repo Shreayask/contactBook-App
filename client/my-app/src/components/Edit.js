@@ -107,11 +107,18 @@ const Edit = () => {
         alert("Added to favorite");
     }
 
+    const deleteFavorite = () => {
+        setInput({ ...input, favorite: false });
+        alert("Removed from favorite");
+
+    }
+
 
     return (
         <div>
             <div className="form-container mt-4">
                 <button className="view-btn" onClick={setFavourite}>Add to Favorite </button>
+                <button className="view-btn" onClick={deleteFavorite}>Remove  Favorite </button>
                 <Form setInfo={setData} setInput={setInput} saveData={updateData} inputData={input} image={input.image} />
 
             </div>

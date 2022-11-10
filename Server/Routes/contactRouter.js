@@ -13,7 +13,7 @@ router.post('/register', async (req, res) => {
     const { name, number, email, description } = req.body
 
     if (!name || !email || !number) {
-        res.status(404).json("Please fill all data");
+        res.status(404).json({ message: "Please fill all data" });
         alert("Please fill all data");
     }
 
@@ -22,7 +22,7 @@ router.post('/register', async (req, res) => {
         console.log(existingUser);
 
         if (existingUser) {
-            res.status(404).json("This contact is already available");
+            res.status(404).json({ message: "This contact is already available" });
         } else {
             const addContact = new Contactt(req.body);
             console.log("acti", addContact);
@@ -106,4 +106,38 @@ router.delete("/delete/:id", async (req, res) => {
 
 })
 
+//get favorite
 
+
+//get userdata
+router.get("/favorite", async (req, res) => {
+    try {
+        const contactData = await Contactt.find({ favorite: true });
+        const strigified = JSON.stringify(contactData);
+
+        res.json({ data: contactData });
+        console.log('datas', contactData);
+
+
+
+    } catch (error) {
+        res.status(404).json(error);
+    }
+})
+
+// get contact deatail from searched name
+
+router.get("/search/:name", async (req, res) => {
+    try {
+        const name = req.params.name;
+        console.log('name', name);
+        const contactNameInfo = await Contactt.find({ name: name })
+        console.log(contactNameInfo);
+        res.status(200).json({
+            data: contactNameInfo
+        })
+    } catch (error) {
+        res.status(404).json({ message: "Error" });
+    }
+
+})

@@ -7,7 +7,9 @@ import Home from './components/Home';
 import Addcontact from './components/Addcontact';
 import Edit from './components/Edit';
 import ViewDetails from './components/ViewDetails';
+import Favorite from './components/Favorite';
 import { BrowserRouter, Routes, Route, useRoutes } from "react-router-dom";
+import Search from './components/Search';
 
 function App() {
   return (
@@ -19,7 +21,8 @@ function App() {
           <Route path="/register" element={<Addcontact />} />
           <Route path="/edit/:id" element={<Edit />} />
           <Route path="/view/:id" element={<ViewDetails />} />
-          <Route path="/favourite" element={<Home />} />
+          <Route path="/favorite" element={<Favorite />} />
+          <Route path="/search/:name" element={<Search />} />
         </Routes>
 
       </BrowserRouter>

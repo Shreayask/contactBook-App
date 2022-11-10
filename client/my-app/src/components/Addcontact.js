@@ -28,7 +28,8 @@ const Addcontact = () => {
 
     }
     const setFavourite = () => {
-        setInput({ ...input, favorite: true })
+        setInput({ ...input, favorite: true });
+        alert("Added to favorite");
     }
 
     const addInputData = async (e) => {
@@ -49,7 +50,7 @@ const Addcontact = () => {
         console.log(response);
 
         if (res.status === 404 || !response) {
-            window.alert("Error!!");
+            window.alert(`${response.message}`);
             console.log("Error");
         } else {
             window.alert("Contact is saved.");

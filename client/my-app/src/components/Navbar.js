@@ -1,8 +1,27 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import logo from "../images/logo.png"
-import { Link } from "react-router-dom";
+
+import { Link, useParams, useNavigate } from "react-router-dom"
+
 
 const Navbar = () => {
+
+    const [searchName, setSearch] = useState("");
+    const history = useNavigate();
+
+    const setInput = (e) => {
+        const { name, value } = e.target
+        console.log('namesearch', value)
+        setSearch(value);
+    }
+
+    const search = () => {
+        history(`/search/${searchName}`);
+    }
+
+
+
+
     return (
         <header>
             <nav class="navbar navbar-expand-lg ">
@@ -25,8 +44,8 @@ const Navbar = () => {
 
                         </ul>
                         <form class="d-flex" role="search">
-                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                            <button class="btn btn-outline-success" type="submit">Search</button>
+                            <input class="form-control me-2" name="name" value={`${searchName}`} type="search" placeholder="Search" aria-label="Search" onChange={setInput} />
+                            <button class="btn btn-outline-success" type="submit" onClick={search}  >Search</button>
                         </form>
                     </div>
                 </div>

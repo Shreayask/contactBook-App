@@ -7,6 +7,8 @@ const { Contactt } = require("./models/contactSchema");
 require("./db/config");
 const cors = require("cors");
 const router = require("./Routes/contactRouter");
+const jwt = require("jsonwebtoken");
+const jwt_Secret = "abccgghhh";
 
 connection.once("open", function () {
     console.log("MongoDB database connection established successfully");

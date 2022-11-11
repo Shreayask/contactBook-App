@@ -2,6 +2,8 @@ import React from "react";
 import { useEffect, useState } from "react";
 
 import DisplayContact from "./DisplayContact";
+import Navbar from "./Navbar";
+
 const Favorite = () => {
     const [getContact, setContactData] = useState([]);
 
@@ -16,11 +18,14 @@ const Favorite = () => {
         console.log('inside');
 
         const response = await fetch('http://localhost:8000/favorite', {
-            method: 'GET',
+            method: 'POST',
             headers: {
                 "Content-Type": "application/json",
                 "Accept": 'application/json'
-            }
+            },
+            body: JSON.stringify({
+                token: window.localStorage.getItem("token")
+            })
 
 
         });
@@ -72,13 +77,16 @@ const Favorite = () => {
 
 
     return (
-        <div className="mt-5">
-            <div className="container">
-                <DisplayContact contactList={getContact} deleteContact={deleteContact} />
+        <>
+            <Navbar></Navbar>
+            <div className="mt-5">
+                <div className="container">
+                    <DisplayContact contactList={getContact} deleteContact={deleteContact} />
 
 
+                </div>
             </div>
-        </div>
+        </>
     )
 
 }

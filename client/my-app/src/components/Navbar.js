@@ -19,6 +19,11 @@ const Navbar = () => {
         history(`/search/${searchName}`);
     }
 
+    const logout = () => {
+
+        localStorage.removeItem("token");
+        window.location.href = "/"
+    }
 
 
 
@@ -33,13 +38,16 @@ const Navbar = () => {
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ms-auto  mb-2 mb-lg-0">
                             <li class="nav-item">
-                                <Link to="/" class="nav-link active">Contact</Link>
+                                <Link to="/user" class="nav-link active">Contact</Link>
                             </li>
                             <li class="nav-item">
                                 <Link to="/favorite" class="nav-link" href="#">Favorite</Link>
                             </li>
                             <li class="nav-item">
                                 <Link class="nav-link" to="/register">Add Contact</Link>
+                            </li>
+                            <li class="nav-item">
+                                <button class="nav-link" onClick={logout}>Logout</button>
                             </li>
 
                         </ul>

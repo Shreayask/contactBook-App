@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import DisplayContact from "./DisplayContact";
+import Navbar from "./Navbar";
+
+
 
 const Search = () => {
 
@@ -15,7 +18,6 @@ const Search = () => {
         console.log('reload')
         getContactData();
 
-
     }, []);
 
     console.log('out', getContact);
@@ -25,11 +27,14 @@ const Search = () => {
         console.log('inside');
 
         const response = await fetch(`http://localhost:8000/search/${name}`, {
-            method: 'GET',
+            method: 'POST',
             headers: {
                 "Content-Type": "application/json",
                 "Accept": 'application/json'
-            }
+            },
+            body: JSON.stringify({
+                token: window.localStorage.getItem("token")
+            })
 
 
         });
@@ -77,16 +82,17 @@ const Search = () => {
     }
 
 
-
-
-
     return (
-        <div className="mt-5">
-            <div className="container">
-                <DisplayContact contactList={getContact} deleteContact={deleteContact} />
+        <>
+            <Navbar />
 
+            <div className="mt-5">
+                <div className="container">
+                    <DisplayContact contactList={getContact} deleteContact={deleteContact} />
+
+                </div>
             </div>
-        </div>
+        </>
     )
 }
 

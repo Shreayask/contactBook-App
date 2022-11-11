@@ -14,7 +14,7 @@ const Form = ({ setInfo, setInput, saveData, inputData, image }) => {
                         <div class="mb-3" style={{ display: "flex", gap: "1" }}>
                             <label for="exampleInputEmail1" class="form-label">Profile: &nbsp; &nbsp; &nbsp; &nbsp;</label>
                             <div class="col-12 col-lg-4 col-xl-4 ">
-                                <div className="image-container" style={{ height: "150px", width: "180px", backgroundColor: "red", marginBottom: "0.5rem" }}>
+                                <div className="image-container" style={{ height: "150px", width: "180px", backgroundColor: "white", marginBottom: "0.5rem" }}>
                                     {!image ? <img src={noImg} style={{ height: "150px", width: "180px" }} /> : <img style={{ height: "150px", width: "180px" }} src={image} />}
                                 </div>
                                 <FileBase64

@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import DisplayContact from "./DisplayContact";
+import React, { useState, useEffect } from "react";
 import Navbar from "./Navbar";
+import DisplayContact from "./DisplayContact";
 
-const Home = () => {
+
+
+const UserPage = () => {
+
     const [getContact, setContactData] = useState([]);
+    const [getUser, setUserData] = useState("")
 
     useEffect(() => {
         getContactData();
@@ -12,21 +15,27 @@ const Home = () => {
 
     console.log('out', getContact);
 
+    console.log('out', getUser);
+
     const getContactData = async () => {
 
         console.log('inside');
 
-        const response = await fetch('http://localhost:8000/', {
-            method: 'GET',
+        const response = await fetch('http://localhost:8000/user', {
+            method: 'POST',
             headers: {
                 "Content-Type": "application/json",
                 "Accept": 'application/json'
-            }
+            },
+            body: JSON.stringify({
+                token: window.localStorage.getItem("token")
+            })
 
 
         });
         console.log('resp ', response);
         const datas = await response.json();
+        const userName = datas.user
 
         console.log('datas ', datas.data);
 
@@ -34,7 +43,9 @@ const Home = () => {
             window.alert("Error!!");
 
         } else {
+
             setContactData(datas.data);
+            setUserData(userName);
             console.log("Data recieved");
         }
     }
@@ -70,24 +81,22 @@ const Home = () => {
 
 
 
-
-
-
     return (
         <>
-
-            <Navbar></Navbar>
-
+            <Navbar />
             <div className="mt-5">
                 <div className="container">
+                    <h1 className="mb-3">Welcome : &nbsp;{getUser}</h1>
                     <DisplayContact contactList={getContact} deleteContact={deleteContact} />
 
 
                 </div>
 
             </div>
+
+
         </>
     )
 }
 
-export default Home
+export default UserPage;

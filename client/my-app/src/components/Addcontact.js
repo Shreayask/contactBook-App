@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Form from './Form';
+import Navbar from "./Navbar";
 
 const Addcontact = () => {
     const [input, setInput] = useState({
@@ -43,7 +44,8 @@ const Addcontact = () => {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                name, number, email, description, image, favorite
+                name, number, email, description, image, favorite,
+                token: window.localStorage.getItem("token")
             })
         });
         const response = await res.json();
@@ -60,16 +62,19 @@ const Addcontact = () => {
     }
 
     return (
-        <div className="form-container mt-6">
-            <div  >
-                <Link to="/"> <button className="view-btn">View Contact </button></Link>
-                <button className="view-btn" onClick={setFavourite}>Add to Favorite </button>
+        <>
+            <Navbar></Navbar>
+            <div className="form-container mt-6">
+                <div >
+                    <Link to="/user"> <button className="view-btn">View Contact </button></Link>
+                    <button className="view-btn" onClick={setFavourite}>Add to Favorite </button>
+                </div>
+
+                <Form setInfo={setData} setInput={setInput} saveData={addInputData} inputData={input} image={input.image} />
+
+
             </div>
-
-            <Form setInfo={setData} setInput={setInput} saveData={addInputData} inputData={input} image={input.image} />
-
-
-        </div>
+        </>
     )
 }
 

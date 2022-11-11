@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Form from "./Form";
+import Navbar from "./Navbar";
 
 
 const Edit = () => {
@@ -67,7 +68,7 @@ const Edit = () => {
         } else {
             window.alert("Contact is Edited.");
             console.log("Data saved");
-            history("/");
+            history("/user");
         }
 
     }
@@ -115,15 +116,19 @@ const Edit = () => {
 
 
     return (
-        <div>
-            <div className="form-container mt-4">
-                <button className="view-btn" onClick={setFavourite}>Add to Favorite </button>
-                <button className="view-btn" onClick={deleteFavorite}>Remove  Favorite </button>
-                <Form setInfo={setData} setInput={setInput} saveData={updateData} inputData={input} image={input.image} />
+        <>
+            <Navbar></Navbar>
+
+            <div>
+                <div className="form-container mt-4">
+                    <button className="view-btn" onClick={setFavourite}>Add to Favorite </button>
+                    <button className="view-btn" onClick={deleteFavorite}>Remove  Favorite </button>
+                    <Form setInfo={setData} setInput={setInput} saveData={updateData} inputData={input} image={input.image} />
+
+                </div>
 
             </div>
-
-        </div>
+        </>
     )
 }
 

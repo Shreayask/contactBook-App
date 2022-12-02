@@ -15,12 +15,11 @@ router.post('/signin', async (req, res) => {
     console.log(req.body);
     const { name, username, password } = req.body
 
-    if (!name || !username || !password) {
-        res.status(404).json({ message: "Please fill all data" });
-        //  alert("Please fill all data");
-    }
-
     try {
+        if (!name || !username || !password) {
+            res.status(404).json({ message: "Please fill all data" });
+            //  alert("Please fill all data");
+        }
         const existingUser = await Users.findOne({ username: username });
         console.log(existingUser);
 
@@ -105,7 +104,6 @@ router.post('/register', async (req, res) => {
         const user = jwt.verify(token, jwt_Secret);
         const username = user.username
         const userData = await Users.findOne({ username: username });
-
         console.log("idd", userData._id);
         const existingUser = await Usercontact.findOne({ userid: userData._id, number: number });
         console.log(existingUser);
@@ -218,6 +216,7 @@ router.post("/search/:name", async (req, res) => {
 
         const contactNameInfo = await Usercontact.find({ userid: userData._id, name: name })
         console.log(contactNameInfo);
+        
         res.status(200).json({
             data: contactNameInfo
         })

@@ -35,13 +35,15 @@ const ViewDetails = () => {
         console.log('resp ', response);
         const datas = await response.json();
 
-        console.log('datas ', datas.data);
+
+        const result = datas.data
+        console.log('datas ', result);
 
         if (response.status === 404 || !datas) {
             window.alert("Error!!");
 
         } else {
-            setContactData(datas.data);
+            setContactData(result);
             console.log("Data recieved");
         }
     }

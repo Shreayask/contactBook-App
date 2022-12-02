@@ -36,20 +36,21 @@ const UserPage = () => {
         console.log('resp ', response);
         const datas = await response.json();
         const userName = datas.user
-
-        console.log('datas ', datas.data);
+        const result = datas.data
+        console.log('datas ', result);
 
         if (response.status === 404 || !datas) {
             window.alert("Error!!");
 
         } else {
 
-            setContactData(datas.data);
+            setContactData(result);
             setUserData(userName);
             console.log("Data recieved");
         }
     }
 
+    //delete contacts
     const deleteContact = async (id) => {
 
         console.log('inside del', id);

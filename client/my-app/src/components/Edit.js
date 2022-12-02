@@ -74,13 +74,7 @@ const Edit = () => {
     }
 
 
-
-
-
     const getContactData = async () => {
-
-
-
         const response = await fetch(`http://localhost:8000/view/${ids}`, {
             method: 'GET',
             headers: {
@@ -92,17 +86,19 @@ const Edit = () => {
         });
         console.log('resp ', response);
         const datas = await response.json();
-
-        console.log('datas ', datas.data);
+        const result = datas.data
+        console.log('datas ', result);
 
         if (response.status === 404 || !datas) {
             window.alert("Error!!");
 
         } else {
-            setInput(datas.data);
+            setInput(result);
             console.log("Data recieved");
         }
     }
+
+
     const setFavourite = () => {
         setInput({ ...input, favorite: true });
         alert("Added to favorite");
